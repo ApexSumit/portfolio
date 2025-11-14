@@ -1,0 +1,352 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Cyber Portfolio — Cybersecurity Student</title>
+  <meta name="description" content="Portfolio of a cybersecurity student — defensive & offensive security, dark web enthusiast. Frosted-glass, liquid Apple-like UI with matrix effect." />
+  <style>
+    :root{
+      --bg1:#071018; /* deep navy */
+      --accent:#00ff6a; /* neon green */
+      --glass-bg: rgba(255,255,255,0.06);
+      --glass-border: rgba(255,255,255,0.12);
+      --glass-glow: 0 8px 30px rgba(0,255,110,0.06);
+      --glass-radius: 18px;
+      --card-padding: 28px;
+      --glass-blur: 12px;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+    }
+    /* reset */
+    *{box-sizing:border-box;margin:0;padding:0}
+    html,body,#app{height:100%}
+    body{
+      min-height:100vh;
+      background: radial-gradient(1200px 600px at 10% 10%, rgba(0,120,90,0.06), transparent), radial-gradient(900px 600px at 90% 90%, rgba(0,120,255,0.04), transparent), var(--bg1);
+      color: #dfeff1;
+      overflow-x:hidden;
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+    }
+
+    /* Liquid apple-like blobs */
+    .liquid-layer{
+      position:fixed;inset:0;z-index:0;pointer-events:none;mix-blend-mode:screen;opacity:0.9;
+    }
+    .blob{
+      position:absolute;border-radius:50%;filter:blur(80px);transform-origin:center;opacity:0.9;will-change:transform;mix-blend-mode:screen;
+    }
+    .blob.a{width:520px;height:520px;left:-10%;top:5%;background:linear-gradient(135deg,#0ff6a6, #00a3ff);animation:floatA 12s ease-in-out infinite}
+    .blob.b{width:420px;height:420px;right:-6%;bottom:5%;background:linear-gradient(135deg,#6a00ff, #00e3a6);animation:floatB 14s ease-in-out infinite}
+    .blob.c{width:260px;height:260px;left:45%;top:-8%;background:linear-gradient(135deg,#ff6adb,#00ffc3);animation:floatC 9s ease-in-out infinite}
+
+    @keyframes floatA{0%{transform:translateY(0) rotate(0deg) scale(1)}50%{transform:translateY(-30px) rotate(8deg) scale(1.04)}100%{transform:translateY(0) rotate(0deg) scale(1)}}
+    @keyframes floatB{0%{transform:translateY(0) rotate(0deg) scale(1)}50%{transform:translateY(20px) rotate(-6deg) scale(1.02)}100%{transform:translateY(0) rotate(0deg) scale(1)}}
+    @keyframes floatC{0%{transform:translateY(0) rotate(0deg) scale(1)}50%{transform:translateY(-18px) rotate(6deg) scale(1.03)}100%{transform:translateY(0) rotate(0deg) scale(1)}}
+
+    /* Matrix canvas (0/1 falling) */
+    #matrix{
+      position:fixed;inset:0;z-index:1;pointer-events:none;mix-blend-mode:overlay;opacity:0.75;
+    }
+
+    /* main app layout */
+    .container{position:relative;z-index:2;max-width:1200px;margin:48px auto;padding:24px}
+
+    header{
+      display:flex;align-items:center;justify-content:space-between;gap:20px;margin-bottom:22px
+    }
+    .logo{
+      display:flex;align-items:center;gap:12px
+    }
+    .logo .mark{width:56px;height:56px;border-radius:14px;background:linear-gradient(135deg,rgba(255,255,255,0.06),rgba(255,255,255,0.03));border:1px solid var(--glass-border);display:grid;place-items:center;backdrop-filter:blur(var(--glass-blur));box-shadow:var(--glass-glow)}
+    .logo h1{font-size:16px;letter-spacing:0.6px}
+    .logo p{font-size:12px;color:rgba(207,245,230,0.9)}
+
+    nav a{color:rgba(200,255,220,0.9);text-decoration:none;padding:10px 12px;border-radius:10px}
+    nav a:hover{background:linear-gradient(90deg,rgba(255,255,255,0.03),rgba(255,255,255,0.02));transform:translateY(-3px)}
+
+    /* frosted tile */
+    .glass{
+      background:var(--glass-bg);
+      border:1px solid var(--glass-border);
+      border-radius:var(--glass-radius);
+      padding:var(--card-padding);
+      backdrop-filter: blur(var(--glass-blur)) saturate(140%);
+      box-shadow:var(--glass-glow);
+      transition:transform 300ms ease, box-shadow 200ms ease;
+      position:relative;overflow:hidden;
+    }
+    .glass:hover{transform:translateY(-10px) scale(1.01);box-shadow:0 18px 60px rgba(0,255,110,0.07)}
+
+    .hero{
+      display:grid;grid-template-columns:1fr 360px;gap:22px;align-items:start;margin-bottom:28px
+    }
+    .hero-left h2{font-size:32px;line-height:1.02;margin-bottom:8px}
+    .tag{display:inline-block;padding:6px 10px;border-radius:999px;font-size:13px;background:linear-gradient(90deg,rgba(0,255,110,0.08), rgba(0,180,255,0.05));border:1px solid rgba(0,255,110,0.09);color:var(--accent);}
+    .sub{color:rgba(200,255,220,0.8);margin-bottom:12px}
+    .cta-row{display:flex;gap:12px;margin-top:12px}
+    .btn{padding:10px 14px;border-radius:12px;border:1px solid rgba(255,255,255,0.06);background:linear-gradient(90deg,rgba(255,255,255,0.02),transparent);cursor:pointer}
+    .btn.primary{background:linear-gradient(90deg, rgba(0,255,110,0.12), rgba(0,160,255,0.07));color:#00180b}
+
+    /* right column profile */
+    .profile-pic{width:100%;height:320px;border-radius:14px;background:linear-gradient(135deg,rgba(255,255,255,0.02),transparent);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:18px;color:rgba(255,255,255,0.7);}
+
+    /* grid of tiles */
+    .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:18px}
+    .tile{padding:18px;border-radius:14px;min-height:140px;display:flex;flex-direction:column;gap:10px}
+    .tile h3{font-size:16px}
+    .skills{display:flex;flex-direction:column;gap:8px}
+    .skill{display:flex;justify-content:space-between;align-items:center;font-size:13px}
+    .bar{height:8px;background:rgba(255,255,255,0.06);border-radius:99px;overflow:hidden}
+    .bar>i{display:block;height:100%;background:linear-gradient(90deg,var(--accent),#00b3ff);border-radius:99px}
+
+    /* responsive */
+    @media (max-width:980px){
+      .hero{grid-template-columns:1fr}
+      .grid{grid-template-columns:repeat(2,1fr)}
+      .profile-pic{height:220px}
+    }
+    @media (max-width:640px){
+      .container{padding:12px}
+      .grid{grid-template-columns:1fr}
+      header{flex-direction:column;align-items:flex-start;gap:12px}
+    }
+
+    /* micro neon outlines on glass cards */
+    .glass:before{content:"";position:absolute;inset:0;border-radius:inherit;padding:1px;background:linear-gradient(90deg, rgba(0,255,110,0.12), rgba(0,120,255,0.06));-webkit-mask:linear-gradient(#000,#000) content-box,linear-gradient(#000,#000);mask:linear-gradient(#000,#000) content-box,linear-gradient(#000,#000);pointer-events:none;opacity:0.07}
+
+    footer{margin-top:28px;text-align:center;color:rgba(200,255,220,0.6);font-size:13px}
+
+    /* little badge */
+    .meta{font-size:13px;color:rgba(200,255,220,0.75)}
+
+    /* project cards */
+    .project-list{display:flex;flex-direction:column;gap:12px}
+    .project{display:flex;gap:12px;align-items:center}
+    .project .dot{width:56px;height:56px;border-radius:10px;background:linear-gradient(135deg,rgba(255,255,255,0.02),transparent);display:grid;place-items:center;border:1px solid rgba(255,255,255,0.04)}
+
+    /* subtle ASCII matrix typeface look for headings */
+    .matrix-title{font-family:monospace, ui-monospace;font-weight:600;letter-spacing:1px;color:var(--accent)}
+
+  </style>
+</head>
+<body>
+  <!-- liquid blobs -->
+  <div class="liquid-layer" aria-hidden="true">
+    <div class="blob a"></div>
+    <div class="blob b"></div>
+    <div class="blob c"></div>
+  </div>
+
+  <!-- matrix canvas -->
+  <canvas id="matrix"></canvas>
+
+  <div id="app" class="container">
+    <header>
+      <div class="logo">
+        <div class="mark">
+          <!-- subtle hacker glyph -->
+          <div class="mark">
+           <!-- Using your uploaded logo as an image -->
+           <img src="https://drive.google.com/thumbnail?id=1Ug6P3ORtqSostkioxBgi7WLdP4rTq1nC&sz=s800" alt="Cybersecurity Logo" width="36" height="36">
+         </div>
+        </div>
+        <div>
+          <h1>Sumit Prajapati</h1>
+          <p class="meta">Cybersecurity student & AI Tools Expert</p>
+        </div>
+      </div>
+      <nav>
+        <a href="#about">About</a>
+        <a href="#projects">Projects</a>
+        <a href="#contact">Contact</a>
+      </nav>
+    </header>
+
+    <main>
+      <section class="hero">
+        <div class="glass hero-left">
+          <span class="tag">Defence &amp; Attack • Dark Web Enthusiast</span>
+          <h2>Hello — I study defense &amp; offensive security</h2>
+          <p class="sub">Currently pursuing B.Tech in CSE at Maharishi University of Information Technology, Lucknow. Doing CyberSecurity course from ZSecurity, Ireland. I explore system hardening, penetration testing, threat-hunting and the sociology of the dark web.</p>
+
+          <div class="cta-row">
+            <button class="btn primary" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">Contact / Hire</button>
+            <button class="btn" onclick="toggleMatrix()">Toggle Matrix</button>
+            <a class="btn" href="#projects" style="text-decoration:none">See Projects</a>
+          </div>
+
+          <div style="margin-top:16px" aria-hidden="true">
+            <small class="meta">I love working on Kali Linux as well as Tails Linux.</small>
+          </div>
+        </div>
+
+        <aside class="glass profile-pic" aria-label="Profile card">
+          <!-- placeholder avatar — replace with your image -->
+          <div style="text-align:center;max-width:240px">
+            <img width="120" height="120" viewBox="0 0 24 24" fill="none" role="img" aria-hidden="true" src="https://drive.google.com/thumbnail?id=1P3xW6A0nEqKnM2-FFbuZzHFZ6TNc6QOp&sz=s800">
+            <div style="margin-top:10px;font-weight:600">Cybersecurity Student</div>
+            <div style="font-size:13px;color:rgba(200,255,220,0.75)">MUIT Lucknow • ZSecurity (Ireland)</div>
+          </div>
+        </aside>
+      </section>
+
+      <section class="grid" id="about">
+        <div class="glass tile">
+          <h3 class="matrix-title">About</h3>
+          <p style="color:rgba(200,255,220,0.8);font-size:14px">I focus on defensive measures, adversary emulation, threat intelligence and responsible exploration of dark web marketplaces and forums to better understand attacker tradecraft.</p>
+          <p class="meta">Studying: CyberSecurity course from ZSecurity, Ireland</p>
+        </div>
+
+        <div class="glass tile">
+          <h3 class="matrix-title">Skills (Never ending Journey)</h3>
+          <div class="skills">
+            <div class="skill"><span>Penetration Testing</span><span>10%</span></div>
+            <div class="bar" aria-hidden><i style="width:10%"></i></div>
+
+            <div class="skill"><span>Defensive Security</span><span>40%</span></div>
+            <div class="bar" aria-hidden><i style="width:40%"></i></div>
+
+            <div class="skill"><span>Threat Intelligence</span><span>55%</span></div>
+            <div class="bar" aria-hidden><i style="width:55%"></i></div>
+
+            <div class="skill"><span>Dark Web Research</span><span>5%</span></div>
+            <div class="bar" aria-hidden><i style="width:5%"></i></div>
+          </div>
+        </div>
+
+        <div class="glass tile" id="projects">
+          <h3 class="matrix-title">Projects</h3>
+          <div class="project-list">
+            <div class="project">
+              <div class="dot">PT</div>
+              <div>
+                <div style="font-weight:600">Pentest Lab (Home)</div>
+                <div class="meta">Currently studying, no practical knowledge but soon I'll be happy to update here.</div>
+              </div>
+            </div>
+
+            <div class="project">
+              <div class="dot">TH</div>
+              <div>
+                <div style="font-weight:600">Threat Hunting Playbook</div>
+                <div class="meta">MITM Attack, Hunt queries, and detection tuning for common attack chains.</div>
+              </div>
+            </div>
+
+            <div class="project">
+              <div class="dot">DW</div>
+              <div>
+                <div style="font-weight:600">Dark Web Study</div>
+                <div class="meta">Responsible research into marketplace structures and vendor signals.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="glass tile">
+          <h3 class="matrix-title">Education</h3>
+          <p style="font-weight:600">Maharishi University of Information Technology, Lucknow</p>
+          <p class="meta">Pursuing B.Tech in Computer Science & Engineering</p>
+          <p style="margin-top:8px;font-weight:600">ZSecurity — CyberSecurity (Ireland)</p>
+          <p class="meta">Coursework: Networking, OS Internals, Cyber Defense, Ethics</p>
+        </div>
+
+        <div class="glass tile">
+          <h3 class="matrix-title">Tools (Here are only Few)</h3>
+          <p class="meta">Aircrack-ng • Netdiscover • Zenmap • Nmap • NetHunter • Wireshark • Reaver • Burp Suite • Metasploit • Splunk / ELK • Cobalt Strike (study) • Python</p>
+        </div>
+
+        <div class="glass tile" id="contact">
+          <h3 class="matrix-title">Contact</h3>
+          <p class="meta">Interested in collaborations or internships? Reach out.</p>
+          <p style="margin-top:10px"><a class="btn" href="mailto:sumitprajapati0508@gmail.com" style="text-decoration:none">Email Me</a></p>          
+        </div>
+      </section>
+
+      <footer>
+        © <span id="year"></span> Cyber Portfolio — Built and managed by &amp; Sumit Prajapati. <span class="meta"></span>
+      </footer>
+    </main>
+  </div>
+
+  <script>
+    // year update
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // MATRIX EFFECT
+    (function(){
+      const canvas = document.getElementById('matrix');
+      const ctx = canvas.getContext('2d');
+      let w = canvas.width = innerWidth;
+      let h = canvas.height = innerHeight;
+      const fontSize = 14;
+      const columns = Math.floor(w / fontSize);
+      let drops = new Array(columns).fill(0).map(()=>Math.floor(Math.random()*h/fontSize));
+      const chars = ['0','1'];
+      let running = true;
+
+      function resize(){
+        w = canvas.width = innerWidth; h = canvas.height = innerHeight; columns = Math.floor(w / fontSize);
+        drops = new Array(columns).fill(0).map(()=>Math.floor(Math.random()*h/fontSize));
+      }
+      let last = 0;
+      function frame(ts){
+        if(!running){ctx.clearRect(0,0,w,h); return}
+        if(ts - last < 30) { requestAnimationFrame(frame); return } // ~33fps cap
+        last = ts;
+        ctx.fillStyle = 'rgba(0,0,0,0.06)';
+        ctx.fillRect(0,0,w,h);
+        ctx.font = fontSize + 'px monospace';
+        for(let i=0;i<drops.length;i++){
+          const x = i * fontSize;
+          const y = drops[i] * fontSize;
+          const text = chars[Math.random()*chars.length | 0];
+          // glow
+          ctx.fillStyle = 'rgba(0,255,110,0.95)';
+          ctx.fillText(text, x, y);
+          ctx.fillStyle = 'rgba(0,255,110,0.12)';
+          ctx.fillText(text, x+1, y+1);
+
+          if(y > h && Math.random() > 0.975) drops[i] = 0;
+          drops[i]++;
+        }
+        requestAnimationFrame(frame);
+      }
+
+      // expose toggle
+      window.toggleMatrix = function(){ running = !running; if(running) requestAnimationFrame(frame); else { ctx.clearRect(0,0,w,h);} }
+
+      // resize handler
+      addEventListener('resize',()=>{
+        // recompute columns and drops gracefully
+        w = canvas.width = innerWidth; h = canvas.height = innerHeight;
+        // reinit drops with new length
+        const newCols = Math.floor(w / fontSize);
+        if(newCols > drops.length){
+          drops = drops.concat(new Array(newCols - drops.length).fill(0).map(()=>Math.floor(Math.random()*h/fontSize)));
+        } else {
+          drops.length = newCols;
+        }
+      });
+
+      requestAnimationFrame(frame);
+    })();
+
+    // small subtle interactive: keyboard matrix acceleration (for fun)
+    (function(){
+      let speedBoost = 0;
+      addEventListener('keydown', (e)=>{
+        if(e.key === 'm') window.toggleMatrix();
+      });
+    })();
+
+    // progressive floating micro animations for the glass tiles (slight stagger)
+    (function(){
+      const tiles = document.querySelectorAll('.glass');
+      tiles.forEach((t,i)=>{ t.style.transitionDelay = (i*40)+'ms' });
+    })();
+
+  </script>
+</body>
+</html> 
