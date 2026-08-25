@@ -1,1675 +1,744 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta
-      name="viewport"
-      content="width=device-width, initial-scale=1.0, viewport-fit=cover"
-    />
-    <title>Sumit Prajapati | Portfolio</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
-      rel="stylesheet"
-    />
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
-    />
-    <style>
-      * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-      }
-      :root {
-        --card-bg-rgb: 255, 255, 255;
-        --text: #2d2d3a;
-        --text-secondary: #5a5a72;
-        --primary: #6c63ff;
-        --primary-light: #8b85ff;
-        --primary-glow: rgba(108, 99, 255, 0.15);
-        --border: #e2e5f0;
-        --shadow: 0 8px 32px rgba(0, 0, 0, 0.05);
-        --nav-bg: rgba(255, 255, 255, 0.65);
-        --blur: blur(10px);
-        --transition: 0.3s ease;
-      }
-      body.dark {
-        --card-bg-rgb: 22, 33, 62;
-        --text: #e0e0f0;
-        --text-secondary: #a0a3c0;
-        --primary: #bb86fc;
-        --primary-light: #d0b3ff;
-        --primary-glow: rgba(187, 134, 252, 0.2);
-        --border: #2f3651;
-        --shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
-        --nav-bg: rgba(26, 26, 46, 0.65);
-      }
-      html {
-        scroll-behavior: smooth;
-      }
-      body {
-        font-family: "Poppins", sans-serif;
-        background: transparent;
-        color: var(--text);
-        transition:
-          color var(--transition),
-          background var(--transition);
-        line-height: 1.6;
-        margin: 0;
-        position: relative;
-        min-height: 100vh;
-      }
-      #animatedCanvas {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        z-index: -1;
-        pointer-events: none;
-      }
-      .wrapper {
-        position: relative;
-        z-index: 1;
-        min-height: 100vh;
-      }
-
-      /* ---- MODAL ---- */
-      .modal-overlay {
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>Sumit Prajapati | Portfolio</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    :root {
+      --card-bg-rgb: 22, 33, 62;
+      --text: #e0e0f0;
+      --text-secondary: #a0a3c0;
+      --primary: #bb86fc;
+      --primary-light: #d0b3ff;
+      --primary-glow: rgba(187, 134, 252, 0.2);
+      --border: #2f3651;
+      --shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+      --nav-bg: rgba(26, 26, 46, 0.65);
+      --blur: blur(10px);
+      --transition: 0.3s ease;
+    }
+    body {
+      font-family: "Poppins", sans-serif;
+      background: #0a0a2e;
+      color: var(--text);
+      transition: color var(--transition), background var(--transition);
+      line-height: 1.6;
+      margin: 0;
+      position: relative;
+      min-height: 100vh;
+    }
+    #animatedCanvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+      pointer-events: none;
+    }
+    .wrapper {
+      position: relative;
+      z-index: 1;
+      min-height: 100vh;
+    }
+    .navbar {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      background: var(--nav-bg);
+      backdrop-filter: var(--blur);
+      -webkit-backdrop-filter: var(--blur);
+      border-bottom: 1px solid var(--border);
+      padding: 0.8rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      transition: background var(--transition);
+    }
+    .nav-logo {
+      font-weight: 700;
+      font-size: 1.4rem;
+      color: var(--primary);
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+    .nav-links {
+      display: flex;
+      gap: 1.8rem;
+      align-items: center;
+      list-style: none;
+      flex-wrap: wrap;
+    }
+    .nav-links a {
+      text-decoration: none;
+      font-weight: 500;
+      color: var(--text);
+      transition: color var(--transition);
+      position: relative;
+      display: flex;
+      align-items: center;
+      gap: 0.3rem;
+    }
+    .nav-links a:hover,
+    .nav-links a.active {
+      color: var(--primary);
+    }
+    .nav-links a.active::after {
+      content: "";
+      position: absolute;
+      bottom: -4px;
+      left: 0;
+      width: 100%;
+      height: 2px;
+      background: var(--primary);
+      border-radius: 2px;
+    }
+    .hamburger {
+      display: none;
+      font-size: 1.5rem;
+      cursor: pointer;
+      color: var(--text);
+    }
+    section {
+      padding: 4rem 2rem;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    .hero {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 2rem;
+      padding-top: 1rem;
+    }
+    .hero-text {
+      flex: 1 1 300px;
+    }
+    .hero-text h1 {
+      font-size: 2.8rem;
+      font-weight: 700;
+      line-height: 1.2;
+    }
+    .hero-text .tagline {
+      font-size: 1.2rem;
+      color: var(--text-secondary);
+      margin: 0.8rem 0 1.5rem;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+    .hero-buttons {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+    .btn {
+      display: inline-block;
+      padding: 0.75rem 1.8rem;
+      border-radius: 40px;
+      font-weight: 600;
+      text-decoration: none;
+      transition: all var(--transition);
+      border: none;
+      cursor: pointer;
+      font-size: 0.95rem;
+      letter-spacing: 0.3px;
+      box-shadow: var(--shadow);
+    }
+    .btn-primary {
+      background: var(--primary);
+      color: #fff;
+    }
+    .btn-primary:hover {
+      background: var(--primary-light);
+      transform: translateY(-2px);
+      box-shadow: 0 10px 20px var(--primary-glow);
+    }
+    .btn-outline {
+      background: transparent;
+      border: 2px solid var(--primary);
+      color: var(--primary);
+    }
+    .btn-outline:hover {
+      background: var(--primary);
+      color: #fff;
+    }
+    .hero-image {
+      flex: 0 0 220px;
+      text-align: center;
+    }
+    .hero-image img {
+      width: 220px;
+      height: 220px;
+      object-fit: cover;
+      border-radius: 50%;
+      border: 4px solid var(--primary);
+      box-shadow: 0 0 30px var(--primary-glow);
+      transition: transform 0.4s;
+    }
+    .hero-image img:hover {
+      transform: scale(1.05);
+    }
+    .section-title {
+      font-size: 2rem;
+      margin-bottom: 1.5rem;
+      display: inline-block;
+      position: relative;
+    }
+    .section-title::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      bottom: -6px;
+      width: 60px;
+      height: 3px;
+      background: var(--primary);
+      border-radius: 2px;
+    }
+    .card {
+      background: rgba(var(--card-bg-rgb), 0.65);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      border-radius: 20px;
+      padding: 1.8rem;
+      box-shadow: var(--shadow);
+      border: 1px solid var(--border);
+      transition: transform 0.3s, box-shadow 0.3s;
+      margin-bottom: 1.5rem;
+    }
+    .card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 15px 35px var(--primary-glow);
+    }
+    .grid-2 {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.5rem;
+    }
+    .skill-category {
+      margin-bottom: 1.2rem;
+    }
+    .skill-category h4 {
+      margin-bottom: 0.5rem;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      color: var(--primary);
+    }
+    .skill-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+    .skill-tag {
+      background: rgba(var(--card-bg-rgb), 0.8);
+      backdrop-filter: blur(4px);
+      padding: 0.4rem 1rem;
+      border-radius: 50px;
+      font-size: 0.85rem;
+      font-weight: 500;
+      border: 1px solid var(--border);
+      transition: all var(--transition);
+    }
+    .skill-tag:hover {
+      background: var(--primary);
+      color: white;
+      border-color: var(--primary);
+    }
+    .project-card {
+      background: rgba(var(--card-bg-rgb), 0.65);
+      backdrop-filter: blur(8px);
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: var(--shadow);
+      border: 1px solid var(--border);
+      transition: all 0.3s;
+      display: flex;
+      flex-direction: column;
+    }
+    .project-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 20px 40px var(--primary-glow);
+    }
+    .project-content {
+      padding: 1.5rem;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+    .tech-bar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin: 1rem 0;
+    }
+    .tech-percent {
+      background: rgba(var(--card-bg-rgb), 0.8);
+      backdrop-filter: blur(4px);
+      padding: 0.2rem 0.8rem;
+      border-radius: 20px;
+      font-size: 0.8rem;
+      font-weight: 500;
+    }
+    .contact-item {
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+      margin: 0.8rem 0;
+    }
+    .social-links {
+      display: flex;
+      gap: 1.5rem;
+      margin: 1rem 0;
+      flex-wrap: wrap;
+    }
+    .social-links a {
+      color: var(--text);
+      font-size: 1.5rem;
+      transition: color 0.2s;
+    }
+    .social-links a:hover {
+      color: var(--primary);
+    }
+    footer {
+      text-align: center;
+      padding: 1.5rem;
+      border-top: 1px solid var(--border);
+      background: rgba(var(--card-bg-rgb), 0.7);
+      backdrop-filter: blur(8px);
+      font-size: 0.9rem;
+      color: var(--text-secondary);
+    }
+    .exp-logo {
+      height: 32px;
+      width: auto;
+      vertical-align: middle;
+      margin-right: 8px;
+      border-radius: 6px;
+    }
+    .exp-card h3 {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+    }
+    @media (max-width: 768px) {
+      .nav-links {
         display: none;
-        position: fixed;
-        top: 0;
-        left: 0;
+        flex-direction: column;
         width: 100%;
-        height: 100%;
-        background: rgba(0, 0, 0, 0.5);
-        z-index: 2000;
-        justify-content: center;
-        align-items: center;
-      }
-      .modal-overlay.active {
-        display: flex;
-      }
-      .modal {
-        background: rgba(var(--card-bg-rgb), 0.95);
-        backdrop-filter: blur(20px);
-        border-radius: 24px;
-        padding: 2rem;
-        border: 1px solid var(--border);
-        box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
-        max-width: 420px;
-        width: 90%;
-        color: var(--text);
-      }
-      .modal h3 {
-        margin-bottom: 1rem;
-        font-size: 1.4rem;
-        display: flex;
-        align-items: center;
-        gap: 0.5rem;
-      }
-      .modal .option-group {
-        margin-bottom: 1.2rem;
-      }
-      .modal .option-group label {
-        display: flex;
-        align-items: center;
-        gap: 0.5rem;
-        margin-bottom: 0.5rem;
-        font-size: 0.95rem;
-        cursor: pointer;
-      }
-      .modal .option-group input[type="radio"],
-      .modal .option-group input[type="checkbox"] {
-        accent-color: var(--primary);
-        transform: scale(1.1);
-      }
-      .modal .modal-buttons {
-        display: flex;
-        gap: 1rem;
-        margin-top: 1.5rem;
-        justify-content: flex-end;
-      }
-      .modal .btn {
-        font-size: 0.9rem;
-        padding: 0.5rem 1.2rem;
-      }
-
-      .navbar {
-        position: sticky;
-        top: 0;
-        z-index: 1000;
         background: var(--nav-bg);
         backdrop-filter: var(--blur);
-        -webkit-backdrop-filter: var(--blur);
-        border-bottom: 1px solid var(--border);
-        padding: 0.8rem 2rem;
+        margin-top: 1rem;
+        padding: 1rem;
+        border-radius: 16px;
+        box-shadow: var(--shadow);
+      }
+      .nav-links.show {
         display: flex;
-        justify-content: space-between;
-        align-items: center;
-        flex-wrap: wrap;
-        transition: background var(--transition);
-      }
-      .nav-logo {
-        font-weight: 700;
-        font-size: 1.4rem;
-        color: var(--primary);
-        display: flex;
-        align-items: center;
-        gap: 0.4rem;
-      }
-      .nav-links {
-        display: flex;
-        gap: 1.8rem;
-        align-items: center;
-        list-style: none;
-        flex-wrap: wrap;
-      }
-      .nav-links a {
-        text-decoration: none;
-        font-weight: 500;
-        color: var(--text);
-        transition: color var(--transition);
-        position: relative;
-        display: flex;
-        align-items: center;
-        gap: 0.3rem;
-      }
-      .nav-links a:hover,
-      .nav-links a.active {
-        color: var(--primary);
-      }
-      .nav-links a.active::after {
-        content: "";
-        position: absolute;
-        bottom: -4px;
-        left: 0;
-        width: 100%;
-        height: 2px;
-        background: var(--primary);
-        border-radius: 2px;
-      }
-      .mode-btn {
-        background: none;
-        border: 1px solid var(--border);
-        border-radius: 50px;
-        padding: 0.5rem 1.2rem;
-        cursor: pointer;
-        display: flex;
-        align-items: center;
-        gap: 0.5rem;
-        font-size: 0.9rem;
-        font-weight: 500;
-        color: var(--text);
-        transition: all var(--transition);
-        background: rgba(var(--card-bg-rgb), 0.45);
-        backdrop-filter: blur(5px);
-      }
-      .mode-btn i {
-        font-size: 1rem;
       }
       .hamburger {
-        display: none;
-        font-size: 1.5rem;
-        cursor: pointer;
-        color: var(--text);
-      }
-      section {
-        padding: 4rem 2rem;
-        max-width: 1200px;
-        margin: 0 auto;
+        display: block;
       }
       .hero {
-        display: flex;
-        flex-wrap: wrap;
-        align-items: center;
-        gap: 2rem;
-        padding-top: 1rem;
-      }
-      .hero-text {
-        flex: 1 1 300px;
+        flex-direction: column-reverse;
+        text-align: center;
       }
       .hero-text h1 {
-        font-size: 2.8rem;
-        font-weight: 700;
-        line-height: 1.2;
-      }
-      .hero-text .tagline {
-        font-size: 1.2rem;
-        color: var(--text-secondary);
-        margin: 0.8rem 0 1.5rem;
-        display: flex;
-        flex-wrap: wrap;
-        gap: 0.5rem;
+        font-size: 2.2rem;
       }
       .hero-buttons {
-        display: flex;
-        gap: 1rem;
-        flex-wrap: wrap;
+        justify-content: center;
       }
-      .btn {
-        display: inline-block;
-        padding: 0.75rem 1.8rem;
-        border-radius: 40px;
-        font-weight: 600;
-        text-decoration: none;
-        transition: all var(--transition);
-        border: none;
-        cursor: pointer;
-        font-size: 0.95rem;
-        letter-spacing: 0.3px;
-        box-shadow: var(--shadow);
+      .exp-logo {
+        height: 26px;
       }
-      .btn-primary {
-        background: var(--primary);
-        color: #fff;
-      }
-      .btn-primary:hover {
-        background: var(--primary-light);
-        transform: translateY(-2px);
-        box-shadow: 0 10px 20px var(--primary-glow);
-      }
-      .btn-outline {
-        background: transparent;
-        border: 2px solid var(--primary);
-        color: var(--primary);
-      }
-      .btn-outline:hover {
-        background: var(--primary);
-        color: #fff;
-      }
-      .hero-image {
-        flex: 0 0 220px;
-        text-align: center;
-      }
-      .hero-image img {
-        width: 220px;
-        height: 220px;
-        object-fit: cover;
-        border-radius: 50%;
-        border: 4px solid var(--primary);
-        box-shadow: 0 0 30px var(--primary-glow);
-        transition: transform 0.4s;
-      }
-      .hero-image img:hover {
-        transform: scale(1.05);
-      }
-      .section-title {
-        font-size: 2rem;
-        margin-bottom: 1.5rem;
-        display: inline-block;
-        position: relative;
-      }
-      .section-title::after {
-        content: "";
-        position: absolute;
-        left: 0;
-        bottom: -6px;
-        width: 60px;
-        height: 3px;
-        background: var(--primary);
-        border-radius: 2px;
-      }
-      .card {
-        background: rgba(var(--card-bg-rgb), 0.65);
-        backdrop-filter: blur(8px);
-        -webkit-backdrop-filter: blur(8px);
-        border-radius: 20px;
-        padding: 1.8rem;
-        box-shadow: var(--shadow);
-        border: 1px solid var(--border);
-        transition:
-          transform 0.3s,
-          box-shadow 0.3s;
-        margin-bottom: 1.5rem;
-      }
-      .card:hover {
-        transform: translateY(-5px);
-        box-shadow: 0 15px 35px var(--primary-glow);
-      }
-      .grid-2 {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-        gap: 1.5rem;
-      }
-      .skill-category {
-        margin-bottom: 1.2rem;
-      }
-      .skill-category h4 {
-        margin-bottom: 0.5rem;
-        display: flex;
-        align-items: center;
-        gap: 0.4rem;
-        color: var(--primary);
-      }
-      .skill-tags {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 0.5rem;
-      }
-      .skill-tag {
-        background: rgba(var(--card-bg-rgb), 0.8);
-        backdrop-filter: blur(4px);
-        padding: 0.4rem 1rem;
-        border-radius: 50px;
-        font-size: 0.85rem;
-        font-weight: 500;
-        border: 1px solid var(--border);
-        transition: all var(--transition);
-      }
-      .skill-tag:hover {
-        background: var(--primary);
-        color: white;
-        border-color: var(--primary);
-      }
-      .project-card {
-        background: rgba(var(--card-bg-rgb), 0.65);
-        backdrop-filter: blur(8px);
-        border-radius: 20px;
-        overflow: hidden;
-        box-shadow: var(--shadow);
-        border: 1px solid var(--border);
-        transition: all 0.3s;
-        display: flex;
-        flex-direction: column;
-      }
-      .project-card:hover {
-        transform: translateY(-8px);
-        box-shadow: 0 20px 40px var(--primary-glow);
-      }
-      .project-content {
-        padding: 1.5rem;
-        flex: 1;
-        display: flex;
-        flex-direction: column;
-      }
-      .tech-bar {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 0.5rem;
-        margin: 1rem 0;
-      }
-      .tech-percent {
-        background: rgba(var(--card-bg-rgb), 0.8);
-        backdrop-filter: blur(4px);
-        padding: 0.2rem 0.8rem;
-        border-radius: 20px;
-        font-size: 0.8rem;
-        font-weight: 500;
-      }
-      .contact-item {
-        display: flex;
-        align-items: center;
-        gap: 0.8rem;
-        margin: 0.8rem 0;
-      }
-      .social-links {
-        display: flex;
-        gap: 1.5rem;
-        margin: 1rem 0;
-        flex-wrap: wrap;
-      }
-      .social-links a {
-        color: var(--text);
-        font-size: 1.5rem;
-        transition: color 0.2s;
-      }
-      .social-links a:hover {
-        color: var(--primary);
-      }
-      .joke-box {
-        background: rgba(var(--card-bg-rgb), 0.7);
-        backdrop-filter: blur(8px);
-        border-radius: 20px;
-        padding: 1.5rem;
-        margin-top: 2rem;
-        text-align: center;
-        border: 1px dashed var(--primary);
-        font-style: italic;
-      }
-      .joke-box button {
-        margin-top: 0.8rem;
-        background: var(--primary);
-        border: none;
-        color: white;
-        padding: 0.5rem 1.5rem;
-        border-radius: 30px;
-        cursor: pointer;
-        transition: 0.2s;
-      }
-      footer {
-        text-align: center;
-        padding: 1.5rem;
-        border-top: 1px solid var(--border);
-        background: rgba(var(--card-bg-rgb), 0.7);
-        backdrop-filter: blur(8px);
-        font-size: 0.9rem;
-        color: var(--text-secondary);
-      }
-      @media (max-width: 768px) {
-        .nav-links {
-          display: none;
-          flex-direction: column;
-          width: 100%;
-          background: var(--nav-bg);
-          backdrop-filter: var(--blur);
-          margin-top: 1rem;
-          padding: 1rem;
-          border-radius: 16px;
-          box-shadow: var(--shadow);
-        }
-        .nav-links.show {
-          display: flex;
-        }
-        .hamburger {
-          display: block;
-        }
-        .hero {
-          flex-direction: column-reverse;
-          text-align: center;
-        }
-        .hero-text h1 {
-          font-size: 2.2rem;
-        }
-        .hero-buttons {
-          justify-content: center;
-        }
-      }
-    </style>
-  </head>
-  <body>
-    <canvas id="animatedCanvas"></canvas>
-    <div class="wrapper">
-      <nav class="navbar">
-        <div class="nav-logo"><i class="fas fa-code"></i> Sumit</div>
-        <div class="hamburger" id="hamburger"><i class="fas fa-bars"></i></div>
-        <ul class="nav-links" id="navLinks">
-          <li>
-            <a href="#home" class="active"><i class="fas fa-home"></i> Home</a>
-          </li>
-          <li>
-            <a href="#about"><i class="fas fa-user"></i> About</a>
-          </li>
-          <li>
-            <a href="#education"
-              ><i class="fas fa-graduation-cap"></i> Education</a
-            >
-          </li>
-          <li>
-            <a href="#skills"><i class="fas fa-tools"></i> Skills</a>
-          </li>
-          <li>
-            <a href="#experience"
-              ><i class="fas fa-briefcase"></i> Experience</a
-            >
-          </li>
-          <li>
-            <a href="#projects"><i class="fas fa-laptop-code"></i> Projects</a>
-          </li>
-          <li>
-            <a href="#certifications"
-              ><i class="fas fa-certificate"></i> Achievements</a
-            >
-          </li>
-          <li>
-            <a href="#contact"><i class="fas fa-envelope"></i> Contact</a>
-          </li>
-        </ul>
-        <button class="mode-btn" id="modeBtn">
-          <i class="fas fa-palette"></i> Mode
-        </button>
-      </nav>
+    }
+  </style>
+</head>
+<body>
+  <canvas id="animatedCanvas"></canvas>
+  <div class="wrapper">
+    <nav class="navbar">
+      <div class="nav-logo"><i class="fas fa-code"></i> Sumit</div>
+      <div class="hamburger" id="hamburger"><i class="fas fa-bars"></i></div>
+      <ul class="nav-links" id="navLinks">
+        <li><a href="#home" class="active"><i class="fas fa-home"></i> Home</a></li>
+        <li><a href="#about"><i class="fas fa-user"></i> About</a></li>
+        <li><a href="#experience"><i class="fas fa-briefcase"></i> Experience</a></li>
+        <li><a href="#projects"><i class="fas fa-laptop-code"></i> Projects</a></li>
+        <li><a href="#education"><i class="fas fa-graduation-cap"></i> Education</a></li>
+        <li><a href="#skills"><i class="fas fa-tools"></i> Skills</a></li>
+        <li><a href="#certifications"><i class="fas fa-certificate"></i> Achievements</a></li>
+        <li><a href="#contact"><i class="fas fa-envelope"></i> Contact</a></li>
+      </ul>
+    </nav>
 
-      <!-- MODE MODAL -->
-      <div class="modal-overlay" id="modeModal">
-        <div class="modal">
-          <h3><i class="fas fa-palette"></i> Scene Settings</h3>
-          <div class="option-group">
-            <p style="font-weight: 600; margin-bottom: 0.5rem">🌤️ Sky</p>
-            <label
-              ><input type="radio" name="skyMode" value="auto" checked /> Auto
-              (time)</label
-            >
-            <label
-              ><input type="radio" name="skyMode" value="night" /> Night</label
-            >
-            <label
-              ><input type="radio" name="skyMode" value="sunrise" />
-              Sunrise</label
-            >
-            <label><input type="radio" name="skyMode" value="day" /> Day</label>
-            <label
-              ><input type="radio" name="skyMode" value="sunset" />
-              Sunset</label
-            >
+    <section id="home">
+      <div class="hero">
+        <div class="hero-text">
+          <h1>Sumit Prajapati 👨‍💻</h1>
+          <p class="tagline">
+            <span>💻 B.Tech Graduate (2026)</span>
+            <span>🌐 AI/ML Engineer</span>
+            <span>🧠 RAG & LLMs</span>
+          </p>
+          <div class="hero-buttons">
+            <a href="https://drive.google.com/file/d/1hnKI-DbpBu_PBlIU53TIB7IoYeLhLOmu/view?usp=sharing" class="btn btn-primary">🚀 My Resume</a>
+            <a href="#contact" class="btn btn-outline">📬 Get In Touch</a>
           </div>
-          <div class="option-group">
-            <p style="font-weight: 600; margin-bottom: 0.5rem">🌦️ Weather</p>
-            <label
-              ><input type="radio" name="weatherMode" value="auto" checked />
-              Auto (clear)</label
-            >
-            <label
-              ><input type="radio" name="weatherMode" value="clear" />
-              Clear</label
-            >
-            <label
-              ><input type="radio" name="weatherMode" value="rain" />
-              Rain</label
-            >
-            <label
-              ><input type="radio" name="weatherMode" value="cloudy" />
-              Cloudy</label
-            >
-            <label
-              ><input type="radio" name="weatherMode" value="windy" />
-              Windy</label
-            >
-            <label
-              ><input type="radio" name="weatherMode" value="foggy" />
-              Foggy</label
-            >
+        </div>
+        <div class="hero-image">
+          <img src="https://drive.google.com/thumbnail?id=1LqGb7-iOm_RVrPDLtI2FBphJFDuG8RQX&sz=w1000" alt="Sumit Prajapati" onerror="this.src='https://via.placeholder.com/220?text=Sumit'" />
+        </div>
+      </div>
+    </section>
+
+    <section id="about">
+      <h2 class="section-title">🙋‍♂️ About Me</h2>
+      <div class="card">
+        <p><strong>B.Tech Graduate (2026) | AI/ML Engineer.</strong> Developed <strong>S.A.R.T.H.I.</strong>, a production-grade RAG system for Indian Railways supporting 22+ Indian languages. Integrated Sarvam-105b (105B LLM), BGE-M3 embeddings, and ChromaDB to deliver 95%+ retrieval accuracy and sub-6-second response times.</p>
+        <p style="margin-top: 0.5rem;">Passionate about web dev & AI. 🧠 Clean code, continuous learning. 📈 Fluent Hindi, proficient English.</p>
+      </div>
+    </section>
+
+    <section id="experience">
+      <h2 class="section-title">💼 Experience</h2>
+      <div class="card exp-card">
+        <h3>
+          <img src="https://images.financialexpressdigital.com/2022/09/hcl1.jpg?w=1024" alt="HCLTech Logo" class="exp-logo" />
+          <span style="display: flex; flex-wrap: wrap; gap: 0.3rem 0.6rem; align-items: center;">
+            <span>AI Intern</span>
+            <span style="font-weight:400; font-size:0.9rem; color: var(--text-secondary);">HCLTech Lucknow</span>
+            <span style="font-weight:400; font-size:0.8rem; color: var(--text-secondary);">1 JUL 2026 – 1 AUG 2026</span>
+          </span>
+        </h3>
+        <ul style="margin-left: 1.5rem; margin-top: 0.5rem;">
+          <li>RAG Intelligence Layer integrated with voice (STT/TTS), translation, citations, and full-stack Flask + JS interface and Langfuse for observability.</li>
+        </ul>
+      </div>
+      <div class="card exp-card">
+        <h3>
+          <img src="https://drive.google.com/thumbnail?id=11e8u4a7nyCH0XKELi1FaVL5gy-GeVK6C&sz=s800" alt="Esports Delics Logo" class="exp-logo" />
+          <span style="display: flex; flex-wrap: wrap; gap: 0.3rem 0.6rem; align-items: center;">
+            <span>Full-Stack Developer</span>
+            <span style="font-weight:400; font-size:0.9rem; color: var(--text-secondary);">Esports Delics</span>
+            <span style="font-weight:400; font-size:0.8rem; color: var(--text-secondary);">JAN 2026 – JUN 2026</span>
+          </span>
+        </h3>
+        <ul style="margin-left: 1.5rem; margin-top: 0.5rem;">
+          <li>Built tournament platform managing 40+ live tournaments (Flask + JS).</li>
+        </ul>
+        <p style="margin-top: 0.5rem;"><a href="https://esdelics.github.io/esdelics/" target="_blank" class="btn btn-outline" style="padding:0.3rem 1.2rem; font-size:0.8rem;">🌐 Live Site</a></p>
+      </div>
+    </section>
+
+    <section id="projects">
+      <h2 class="section-title">🚀 Projects</h2>
+      <div class="grid-2">
+        <div class="project-card">
+          <div class="project-content">
+            <h3>S.A.R.T.H.I. - AI Railway Intelligence</h3>
+            <p>Multilingual RAG Intelligence Layer with voice I/O, translation, citations and image output.</p>
+            <div class="tech-bar">
+              <span class="tech-percent">RAG · LLM</span>
+              <span class="tech-percent">Flask</span>
+              <span class="tech-percent">ChromaDB</span>
+            </div>
+            <div style="display:flex; gap:0.8rem; flex-wrap:wrap; margin-top:0.5rem;">
+              <a href="https://www.linkedin.com/posts/sumit-prajapati-696597250_ai-rag-machinelearning-ugcPost-7492982929489518592-xftK/" target="_blank" class="btn btn-outline" style="padding:0.3rem 1.2rem; font-size:0.8rem;">🎥 Demo</a>
+              <a href="https://github.com/ApexSumit/RAG_Pipeline" target="_blank" class="btn btn-outline" style="padding:0.3rem 1.2rem; font-size:0.8rem;">🐙 GitHub</a>
+            </div>
           </div>
-          <div class="option-group">
-            <label
-              ><input type="checkbox" id="meteorToggle" checked /> ☄️
-              Meteors</label
-            >
+        </div>
+        <div class="project-card">
+          <div class="project-content">
+            <h3>Cognitive Misinformation Detection</h3>
+            <p>ML-based web app for real-time fake news detection.</p>
+            <div class="tech-bar">
+              <span class="tech-percent">ML · NLP</span>
+              <span class="tech-percent">Flask</span>
+            </div>
+            <div style="display:flex; gap:0.8rem; flex-wrap:wrap; margin-top:0.5rem;">
+              <a href="https://github.com/VaishnaviiSri/cognitive-misinformation-detection" target="_blank" class="btn btn-outline" style="padding:0.3rem 1.2rem; font-size:0.8rem;">🐙 GitHub</a>
+            </div>
           </div>
-          <div class="modal-buttons">
-            <button class="btn btn-outline" id="closeModalBtn">Close</button>
+        </div>
+        <div class="project-card">
+          <div class="project-content">
+            <h3>AI Calculator</h3>
+            <p>AI-powered calculator with Gemini API for text/handwritten/image inputs.</p>
+            <div class="tech-bar">
+              <span class="tech-percent">JS 84.7%</span>
+              <span class="tech-percent">HTML 9.2%</span>
+              <span class="tech-percent">TS 6.1%</span>
+            </div>
+            <div style="display:flex; gap:0.8rem; flex-wrap:wrap; margin-top:0.5rem;">
+              <a href="https://github.com/ApexSumit/AI-Calc" target="_blank" class="btn btn-outline" style="padding:0.3rem 1.2rem; font-size:0.8rem;">🐙 GitHub</a>
+            </div>
           </div>
         </div>
       </div>
+    </section>
 
-      <section id="home">
-        <div class="hero">
-          <div class="hero-text">
-            <h1>Sumit Prajapati 👨‍💻</h1>
-            <p class="tagline">
-              <span>💻 Computer Science Student</span
-              ><span>🌐 Web Developer</span
-              ><span>🤖 AI Intern at HCL Tech Lucknow</span>
-            </p>
-            <div class="hero-buttons">
-              <a href="https://drive.google.com/file/d/1hnKI-DbpBu_PBlIU53TIB7IoYeLhLOmu/view?usp=sharing" class="btn btn-primary">🚀 My Resume</a
-              ><a href="#contact" class="btn btn-outline">📬 Get In Touch</a>
+    <section id="education">
+      <h2 class="section-title">🎓 Education</h2>
+      <div class="card">
+        <h3>🏫 Maharishi University of Information Technology</h3>
+        <p><strong>B.Tech CSE</strong></p>
+        <p>📅 2022–2026 | Lucknow</p>
+        <p>📊 CGPA: <strong>7.73</strong></p>
+        <p>🔐 Cybersecurity (zSecurity), Web Dev</p>
+      </div>
+      <div class="card">
+        <h3>🏫 Little Flower Children School</h3>
+        <p><strong>Intermediate</strong></p>
+        <p>📅 2020–2022 | Mau</p>
+      </div>
+      <div class="card">
+        <h3>🏫 Angel's Learning Garden</h3>
+        <p><strong>High School</strong></p>
+        <p>📅 2019–2020 | Mau</p>
+      </div>
+    </section>
+
+    <section id="skills">
+      <h2 class="section-title">🛠️ Skills & Tools</h2>
+      <div class="grid-2">
+        <div class="card">
+          <div class="skill-category">
+            <h4><i class="fas fa-code"></i> Languages</h4>
+            <div class="skill-tags">
+              <span class="skill-tag">C</span><span class="skill-tag">C#</span>
+              <span class="skill-tag">Python</span><span class="skill-tag">JavaScript</span>
             </div>
           </div>
-          <div class="hero-image">
-            <img
-              src="https://drive.google.com/thumbnail?id=1LqGb7-iOm_RVrPDLtI2FBphJFDuG8RQX&sz=w1000"
-              alt="Sumit Prajapati"
-              onerror="this.src = 'https://via.placeholder.com/220?text=Sumit'"
-            />
+          <div class="skill-category">
+            <h4><i class="fas fa-paint-brush"></i> Frontend</h4>
+            <div class="skill-tags">
+              <span class="skill-tag">HTML5</span><span class="skill-tag">CSS3</span>
+              <span class="skill-tag">TailwindCSS</span>
+            </div>
           </div>
-        </div>
-        <div class="joke-box">
-          <p id="jokeText">😂 Loading joke...</p>
-          <button id="newJokeBtn">🔄 Another one!</button>
-        </div>
-      </section>
-
-      <section id="about">
-        <h2 class="section-title">🙋‍♂️ About Me</h2>
-        <div class="card">
-          <p>
-            Hey there! I'm <strong>Sumit Prajapati</strong>, a curious CS
-            undergrad at MUIT, Lucknow. Passionate about web dev & AI. 🧠
-          </p>
-          <p>
-            Currently an AI intern at <strong>HCL Tech Lucknow</strong>,
-            building smart solutions. I love leading tech events & hackathons.
-            Away from keyboard: singing, Arduino, debugging life 😅
-          </p>
-          <p>
-            Clean code, continuous learning. 📈 Fluent Hindi, proficient
-            English.
-          </p>
-        </div>
-      </section>
-      <section id="education">
-        <h2 class="section-title">🎓 Education</h2>
-        <div class="card">
-          <h3>🏫 Maharishi University of Information Technology</h3>
-          <p><strong>B.Tech CSE</strong></p>
-          <p>📅 2022–2026 | Lucknow</p>
-          <p>📊 CGPA: <strong>7.73</strong></p>
-          <p>🔐 Cybersecurity (zSecurity), Web Dev</p>
+          <div class="skill-category">
+            <h4><i class="fas fa-server"></i> Backend</h4>
+            <div class="skill-tags">
+              <span class="skill-tag">NodeJS</span><span class="skill-tag">Flask</span>
+            </div>
+          </div>
+          <div class="skill-category">
+            <h4><i class="fas fa-database"></i> Databases</h4>
+            <div class="skill-tags"><span class="skill-tag">MySQL</span></div>
+          </div>
         </div>
         <div class="card">
-          <h3>🏫 Little Flower Children School</h3>
-          <p><strong>Intermediate</strong></p>
-          <p>📅 2020–2022 | Mau</p>
-          <!-- <p>📊 Percentage: <strong>00.00%</strong></p> -->
+          <div class="skill-category">
+            <h4><i class="fas fa-cloud"></i> DevOps</h4>
+            <div class="skill-tags">
+              <span class="skill-tag">Git</span><span class="skill-tag">GitHub</span>
+              <span class="skill-tag">Docker</span><span class="skill-tag">Kubernetes</span>
+              <span class="skill-tag">Linux</span>
+            </div>
+          </div>
+          <div class="skill-category">
+            <h4><i class="fas fa-microchip"></i> Hardware</h4>
+            <div class="skill-tags"><span class="skill-tag">Arduino</span></div>
+          </div>
+          <div class="skill-category">
+            <h4><i class="fas fa-shield-alt"></i> Cybersecurity</h4>
+            <div class="skill-tags">
+              <span class="skill-tag">Dark Web Research</span><span class="skill-tag">IDS</span>
+            </div>
+          </div>
+          <div class="skill-category">
+            <h4><i class="fas fa-user-secret"></i> Tools</h4>
+            <div class="skill-tags">
+              <span class="skill-tag">Aircrack-ng</span><span class="skill-tag">Nmap</span>
+              <span class="skill-tag">Wireshark</span><span class="skill-tag">Burp Suite</span>
+              <span class="skill-tag">Metasploit</span><span class="skill-tag">Splunk/ELK</span>
+              <span class="skill-tag">Cobalt Strike</span>
+            </div>
+          </div>
+          <div class="skill-category">
+            <h4><i class="fas fa-bullhorn"></i> Digital Marketing</h4>
+            <div class="skill-tags">
+              <span class="skill-tag">Instagram Ads</span><span class="skill-tag">Facebook Ads</span>
+              <span class="skill-tag">SEO</span>
+            </div>
+          </div>
+          <div class="skill-category">
+            <h4><i class="fas fa-photo-video"></i> Extras</h4>
+            <div class="skill-tags"><span class="skill-tag">Video/Image/Audio Editing</span></div>
+          </div>
+          <div class="skill-category">
+            <h4><i class="fas fa-users"></i> Soft Skills</h4>
+            <div class="skill-tags">
+              <span class="skill-tag">Hindi</span><span class="skill-tag">English</span>
+              <span class="skill-tag">Leadership</span><span class="skill-tag">Event Mgmt</span>
+            </div>
+            <p style="margin-top: 0.5rem; font-size: 0.9rem;">🎤 Led RoboTalk & Singing event</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="certifications">
+      <h2 class="section-title">🏆 Achievements</h2>
+      <div class="grid-2">
+        <div class="card">
+          <h3><i class="fas fa-bullhorn"></i> Digital Marketing</h3>
+          <p>Certification</p>
+          <a href="https://drive.google.com/drive/folders/1Y3PFiY7fs4vHWQQeaLc0Hz4GRyojaNIn?usp=sharing" target="_blank" class="btn btn-outline">📂 Folder</a>
         </div>
         <div class="card">
-          <h3>🏫 Angel's Learning Garden</h3>
-          <p><strong>High School</strong></p>
-          <p>📅 2019–2020 | Mau</p>
-          <!-- <p>📊 Percentage: <strong>00.00%</strong></p> -->
+          <h3><i class="fas fa-trophy"></i> Academic</h3>
+          <p>Recognitions & awards</p>
+          <a href="https://drive.google.com/drive/folders/1g4VCIj8TRClONgxzyKoMo-X4CmQwcRWS?usp=sharing" target="_blank" class="btn btn-outline">📂 Folder</a>
         </div>
-      </section>
-      <section id="skills">
-        <h2 class="section-title">🛠️ Skills & Tools</h2>
-        <div class="grid-2">
-          <div class="card">
-            <div class="skill-category">
-              <h4><i class="fas fa-code"></i> Languages</h4>
-              <div class="skill-tags">
-                <span class="skill-tag">C</span><span class="skill-tag">C#</span
-                ><span class="skill-tag">Python</span
-                ><span class="skill-tag">JavaScript</span>
-              </div>
-            </div>
-            <div class="skill-category">
-              <h4><i class="fas fa-paint-brush"></i> Frontend</h4>
-              <div class="skill-tags">
-                <span class="skill-tag">HTML5</span
-                ><span class="skill-tag">CSS3</span
-                ><span class="skill-tag">TailwindCSS</span>
-              </div>
-            </div>
-            <div class="skill-category">
-              <h4><i class="fas fa-server"></i> Backend</h4>
-              <div class="skill-tags">
-                <span class="skill-tag">NodeJS</span
-                ><span class="skill-tag">Flask</span>
-              </div>
-            </div>
-            <div class="skill-category">
-              <h4><i class="fas fa-database"></i> Databases</h4>
-              <div class="skill-tags"><span class="skill-tag">MySQL</span></div>
-            </div>
-          </div>
-          <div class="card">
-            <div class="skill-category">
-              <h4><i class="fas fa-cloud"></i> DevOps</h4>
-              <div class="skill-tags">
-                <span class="skill-tag">Git</span
-                ><span class="skill-tag">GitHub</span
-                ><span class="skill-tag">Docker</span
-                ><span class="skill-tag">Kubernetes</span
-                ><span class="skill-tag">Linux</span>
-              </div>
-            </div>
-            <div class="skill-category">
-              <h4><i class="fas fa-microchip"></i> Hardware</h4>
-              <div class="skill-tags">
-                <span class="skill-tag">Arduino</span>
-              </div>
-            </div>
-            <div class="skill-category">
-              <h4><i class="fas fa-shield-alt"></i> Cybersecurity</h4>
-              <div class="skill-tags">
-                <span class="skill-tag">Dark Web Research</span
-                ><span class="skill-tag">IDS</span>
-              </div>
-            </div>
-            <div class="skill-category">
-              <h4><i class="fas fa-user-secret"></i> Tools</h4>
-              <div class="skill-tags">
-                <span class="skill-tag">Aircrack-ng</span
-                ><span class="skill-tag">Nmap</span
-                ><span class="skill-tag">Wireshark</span
-                ><span class="skill-tag">Burp Suite</span
-                ><span class="skill-tag">Metasploit</span
-                ><span class="skill-tag">Splunk/ELK</span
-                ><span class="skill-tag">Cobalt Strike</span>
-              </div>
-            </div>
-            <div class="skill-category">
-              <h4><i class="fas fa-bullhorn"></i> Digital Marketing</h4>
-              <div class="skill-tags">
-                <span class="skill-tag">Instagram Ads</span
-                ><span class="skill-tag">Facebook Ads</span
-                ><span class="skill-tag">SEO</span>
-              </div>
-            </div>
-            <div class="skill-category">
-              <h4><i class="fas fa-photo-video"></i> Extras</h4>
-              <div class="skill-tags">
-                <span class="skill-tag">Video/Image/Audio Editing</span>
-              </div>
-            </div>
-            <div class="skill-category">
-              <h4><i class="fas fa-users"></i> Soft Skills</h4>
-              <div class="skill-tags">
-                <span class="skill-tag">Hindi</span
-                ><span class="skill-tag">English</span
-                ><span class="skill-tag">Leadership</span
-                ><span class="skill-tag">Event Mgmt</span>
-              </div>
-              <p style="margin-top: 0.5rem; font-size: 0.9rem">
-                🎤 Led RoboTalk & Singing event
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
-      <section id="experience">
-        <h2 class="section-title">💼 Experience</h2>
         <div class="card">
-          <h3>🤖 AI Intern</h3>
-          <p>
-            <strong>HCL Technologies, Lucknow</strong> • Jun 2026 – Jul 2026
-          </p>
-          <ul style="margin-left: 1.5rem">
-            <li>AI‑powered automation tools</li>
-            <li>Integrated ML APIs</li>
-            <li>Real‑world deployment pipelines</li>
-          </ul>
+          <h3><i class="fas fa-medal"></i> Competitions</h3>
+          <p>Hackathons & contests</p>
+          <a href="https://drive.google.com/drive/folders/1-Ga4sPVT7e31xcWc-9I4kyWsC_A8OAai?usp=sharing" target="_blank" class="btn btn-outline">📂 Folder</a>
         </div>
-      </section>
-      <section id="projects">
-        <h2 class="section-title">🚀 Projects</h2>
-        <div class="grid-2">
-          <div class="project-card">
-            <div class="project-content">
-              <h3>🧮 AI Calculator</h3>
-              <p>
-                Front‑end + Gemini API backend. Natural language calculator.
-              </p>
-              <div class="tech-bar">
-                <span class="tech-percent">JS 84.7%</span
-                ><span class="tech-percent">HTML 9.2%</span
-                ><span class="tech-percent">TS 6.1%</span>
-              </div>
-              <p style="font-size: 0.9rem">👤 Leader</p>
-              <a
-                href="https://github.com/ApexSumit/AI-Calc"
-                target="_blank"
-                class="btn btn-outline"
-                >🔗 GitHub</a
-              >
-            </div>
-          </div>
-          <div class="project-card">
-            <div class="project-content">
-              <h3>🎮 ES‑Delics</h3>
-              <p>
-                Created & manage Esports Delics website. HTML, CSS, JS, GitHub
-                Pages.
-              </p>
-              <div class="tech-bar">
-                <span class="tech-percent">HTML/CSS</span
-                ><span class="tech-percent">JavaScript</span
-                ><span class="tech-percent">GitHub Pages</span>
-              </div>
-              <p style="font-size: 0.9rem">👤 Creator & Manager</p>
-              <a
-                href="https://esdelics.github.io/esdelics/"
-                target="_blank"
-                class="btn btn-outline"
-                >🌐 Live Site</a
-              >
-            </div>
-          </div>
-        </div>
-      </section>
-      <section id="certifications">
-        <h2 class="section-title">🏆 Achievements</h2>
-        <div class="grid-2">
-          <div class="card">
-            <h3><i class="fas fa-bullhorn"></i> Digital Marketing</h3>
-            <p>Certification</p>
-            <a
-              href="https://drive.google.com/drive/folders/1Y3PFiY7fs4vHWQQeaLc0Hz4GRyojaNIn?usp=sharing"
-              target="_blank"
-              class="btn btn-outline"
-              >📂 Folder</a
-            >
-          </div>
-          <div class="card">
-            <h3><i class="fas fa-trophy"></i> Academic</h3>
-            <p>Recognitions & awards</p>
-            <a
-              href="https://drive.google.com/drive/folders/1g4VCIj8TRClONgxzyKoMo-X4CmQwcRWS?usp=sharing"
-              target="_blank"
-              class="btn btn-outline"
-              >📂 Folder</a
-            >
-          </div>
-          <div class="card">
-            <h3><i class="fas fa-medal"></i> Competitions</h3>
-            <p>Hackathons & contests</p>
-            <a
-              href="https://drive.google.com/drive/folders/1-Ga4sPVT7e31xcWc-9I4kyWsC_A8OAai?usp=sharing"
-              target="_blank"
-              class="btn btn-outline"
-              >📂 Folder</a
-            >
-          </div>
-          <div class="card">
-            <h3><i class="fas fa-running"></i> Sports</h3>
-            <p>Activities & achievements</p>
-            <a
-              href="https://drive.google.com/drive/folders/1YITt3EyKlhMsCCrgbCy-iCMcZxgF-8x4?usp=sharing"
-              target="_blank"
-              class="btn btn-outline"
-              >📂 Folder</a
-            >
-          </div>
-        </div>
-      </section>
-      <section id="contact">
-        <h2 class="section-title">📬 Get In Touch</h2>
         <div class="card">
-          <div class="contact-item">
-            <i class="fas fa-envelope"></i> <strong>Email:</strong>
-            <a href="mailto:sumitprajapati0508@gmail.com">Sumit Prajapati</a>
-          </div>
-          <div class="contact-item">
-            <i class="fas fa-map-marker-alt"></i> Lucknow, India
-          </div>
-          <div class="contact-item">
-            <i class="fas fa-file-pdf"></i>
-            <a
-              href="https://drive.google.com/file/d/1hnKI-DbpBu_PBlIU53TIB7IoYeLhLOmu/view?usp=sharing"
-              target="_blank"
-              >Resume PDF</a
-            >
-          </div>
-          <div class="social-links">
-            <a
-              href="https://www.linkedin.com/in/sumit-prajapati-696597250/"
-              target="_blank"
-              ><i class="fab fa-linkedin"></i></a
-            ><a href="https://github.com/ApexSumit" target="_blank"
-              ><i class="fab fa-github"></i></a
-            ><a href="https://x.com/sumit5_8" target="_blank"
-              ><i class="fab fa-twitter"></i></a
-            ><a
-              href="https://www.instagram.com/sumitprajapati.up/"
-              target="_blank"
-              ><i class="fab fa-instagram"></i></a
-            ><a href="https://leetcode.com/u/sumit5_9/" target="_blank"
-              ><i class="fas fa-code"></i></a
-            ><a href="https://www.kaggle.com/pxsumit" target="_blank"
-              ><i class="fab fa-kaggle"></i
-            ></a>
-          </div>
+          <h3><i class="fas fa-running"></i> Sports</h3>
+          <p>Activities & achievements</p>
+          <a href="https://drive.google.com/drive/folders/1YITt3EyKlhMsCCrgbCy-iCMcZxgF-8x4?usp=sharing" target="_blank" class="btn btn-outline">📂 Folder</a>
         </div>
-      </section>
-      <footer>
-        <p>Created by Sumit Prajapati, obviously with the help of AI.</p>
-        <p style="font-size: 0.8rem">
-          “Why do programmers prefer dark mode? Because light attracts bugs!” 🐛 <br>
-          "For beautiful experience select: Night and Foggy from the mode😊."
-        </p>
-      </footer>
-    </div>
+      </div>
+    </section>
 
-    <script>
-      (function () {
-        const canvas = document.getElementById("animatedCanvas");
-        const ctx = canvas.getContext("2d");
-        let width, height, groundLevel;
-        function resize() {
-          width = window.innerWidth;
-          height = window.innerHeight;
-          canvas.width = width;
-          canvas.height = height;
-          groundLevel = height - 140;
-        }
-        window.addEventListener("resize", resize);
-        resize();
+    <section id="contact">
+      <h2 class="section-title">📬 Get In Touch</h2>
+      <div class="card">
+        <div class="contact-item">
+          <i class="fas fa-envelope"></i> <strong>Email:</strong>
+          <a href="mailto:sumitprajapati0508@gmail.com">Sumit Prajapati</a>
+        </div>
+        <div class="contact-item">
+          <i class="fas fa-map-marker-alt"></i> Lucknow, India
+        </div>
+        <div class="contact-item">
+          <i class="fas fa-file-pdf"></i>
+          <a href="https://drive.google.com/file/d/1hnKI-DbpBu_PBlIU53TIB7IoYeLhLOmu/view?usp=sharing" target="_blank">Resume PDF</a>
+        </div>
+        <div class="social-links">
+          <a href="https://www.linkedin.com/in/sumit-prajapati-696597250/" target="_blank"><i class="fab fa-linkedin"></i></a>
+          <a href="https://github.com/ApexSumit" target="_blank"><i class="fab fa-github"></i></a>
+          <a href="https://x.com/sumit5_8" target="_blank"><i class="fab fa-twitter"></i></a>
+          <a href="https://www.instagram.com/sumitprajapati.up/" target="_blank"><i class="fab fa-instagram"></i></a>
+          <a href="https://leetcode.com/u/sumit5_9/" target="_blank"><i class="fas fa-code"></i></a>
+          <a href="https://www.kaggle.com/pxsumit" target="_blank"><i class="fab fa-kaggle"></i></a>
+        </div>
+      </div>
+    </section>
+    <footer>
+      <p>Created by Sumit Prajapati, obviously with the help of AI.</p>
+      <p style="font-size: 0.8rem;">“Why do programmers prefer dark mode? Because light attracts bugs!” 🐛</p>
+    </footer>
+  </div>
 
-        const body = document.body;
+  <script>
+    (function() {
+      const canvas = document.getElementById('animatedCanvas');
+      const ctx = canvas.getContext('2d');
+      let width, height, groundLevel;
+      function resize() {
+        width = window.innerWidth;
+        height = window.innerHeight;
+        canvas.width = width;
+        canvas.height = height;
+        groundLevel = height - 140;
+      }
+      window.addEventListener('resize', resize);
+      resize();
 
-        // Scene settings (null = auto)
-        let manualSky = null;
-        let manualWeather = null;
-        let meteorsEnabled = true;
+      const body = document.body;
+      // Force dark theme (night)
+      body.classList.add('dark');
 
-        // Auto detection
-        function getAutoSky() {
-          const h = new Date().getHours();
-          if (h >= 6 && h < 8) return "sunrise";
-          if (h >= 8 && h < 18) return "day";
-          if (h >= 18 && h < 20) return "sunset";
-          return "night";
-        }
-        function getAutoWeather() {
-          return "clear";
-        }
+      // ---------- fixed "Night & Foggy" scene ----------
+      function drawSkyGradient() {
+        const grad = ctx.createLinearGradient(0, 0, 0, groundLevel);
+        grad.addColorStop(0, '#0a0a2e');
+        grad.addColorStop(0.7, '#1a1a3e');
+        ctx.fillStyle = grad;
+        ctx.fillRect(0, 0, width, height);
+      }
 
-        function getEffectiveSky() {
-          return manualSky || getAutoSky();
-        }
-        function getEffectiveWeather() {
-          return manualWeather || getAutoWeather();
-        }
+      // stars (night)
+      const stars = [];
+      for (let i = 0; i < 200; i++) stars.push({
+        x: Math.random() * width,
+        y: Math.random() * groundLevel,
+        r: Math.random() * 2 + 0.8,
+        a: Math.random() * 0.7 + 0.3,
+        sp: Math.random() * 0.02 + 0.005,
+        off: Math.random() * Math.PI * 2
+      });
 
-        // Apply dark/light based on sky
-        function applyThemeFromSky(sky) {
-          if (sky === "night" || sky === "sunset") {
-            body.classList.add("dark");
-          } else {
-            body.classList.remove("dark");
-          }
-        }
-
-        // ---------- Sun/Moon ----------
-        function drawSunMoon(sky) {
-          const minDim = Math.min(width, height);
-          let radius = Math.min(minDim * 0.18, 150);
-          if (minDim < 600) radius = Math.min(minDim * 0.25, 80);
-          const cx = width - radius,
-            cy = radius;
-          if (sky === "night") {
-            ctx.save();
-            ctx.shadowColor = "#ffffcc";
-            ctx.shadowBlur = 20;
-            ctx.fillStyle = "#f5f5dc";
-            ctx.beginPath();
-            ctx.arc(cx, cy, radius, 0, Math.PI * 2);
-            ctx.fill();
-            ctx.shadowBlur = 0;
-            ctx.fillStyle = "#d4d4aa";
-            ctx.beginPath();
-            ctx.arc(
-              cx - radius * 0.2,
-              cy - radius * 0.2,
-              radius * 0.15,
-              0,
-              Math.PI * 2,
-            );
-            ctx.fill();
-            ctx.beginPath();
-            ctx.arc(
-              cx + radius * 0.25,
-              cy + radius * 0.15,
-              radius * 0.1,
-              0,
-              Math.PI * 2,
-            );
-            ctx.fill();
-            ctx.beginPath();
-            ctx.arc(
-              cx - radius * 0.1,
-              cy + radius * 0.3,
-              radius * 0.12,
-              0,
-              Math.PI * 2,
-            );
-            ctx.fill();
-            ctx.restore();
-          } else {
-            const sunColor =
-              sky === "sunrise"
-                ? "#ff8c42"
-                : sky === "sunset"
-                  ? "#ff6347"
-                  : "#ffd700";
-            const glowColor =
-              sky === "sunrise"
-                ? "#ffaa66"
-                : sky === "sunset"
-                  ? "#ff7f50"
-                  : "#ffea00";
-            const gradient = ctx.createRadialGradient(
-              cx,
-              cy,
-              radius * 0.3,
-              cx,
-              cy,
-              radius * 1.8,
-            );
-            gradient.addColorStop(0, "rgba(255,255,200,0.9)");
-            gradient.addColorStop(0.5, glowColor + "cc");
-            gradient.addColorStop(1, "rgba(255,255,200,0)");
-            ctx.save();
-            ctx.fillStyle = gradient;
-            ctx.beginPath();
-            ctx.arc(cx, cy, radius * 1.8, 0, Math.PI * 2);
-            ctx.fill();
-            ctx.fillStyle = sunColor;
-            ctx.shadowColor = glowColor;
-            ctx.shadowBlur = 25;
-            ctx.beginPath();
-            ctx.arc(cx, cy, radius, 0, Math.PI * 2);
-            ctx.fill();
-            ctx.restore();
-          }
-        }
-
-        function drawSkyGradient(sky) {
-          const grad = ctx.createLinearGradient(0, 0, 0, groundLevel);
-          if (sky === "night") {
-            grad.addColorStop(0, "#0a0a2e");
-            grad.addColorStop(0.7, "#1a1a3e");
-          } else if (sky === "sunrise") {
-            grad.addColorStop(0, "#ff9a76");
-            grad.addColorStop(0.5, "#fbc2eb");
-            grad.addColorStop(1, "#8ac4d0");
-          } else if (sky === "day") {
-            grad.addColorStop(0, "#4facfe");
-            grad.addColorStop(0.7, "#e0f7fa");
-          } else if (sky === "sunset") {
-            grad.addColorStop(0, "#ff5e62");
-            grad.addColorStop(0.5, "#ff9966");
-            grad.addColorStop(1, "#1e3c72");
-          }
-          ctx.fillStyle = grad;
-          ctx.fillRect(0, 0, width, height);
-        }
-
-        const stars = [];
-        for (let i = 0; i < 200; i++)
-          stars.push({
-            x: Math.random() * width,
-            y: Math.random() * groundLevel,
-            r: Math.random() * 2 + 0.8,
-            a: Math.random() * 0.7 + 0.3,
-            sp: Math.random() * 0.02 + 0.005,
-            off: Math.random() * Math.PI * 2,
-          });
-        function drawStars(sky) {
-          if (sky !== "night") return;
-          const t = Date.now();
-          stars.forEach((s) => {
-            const twinkle = Math.sin(t * s.sp + s.off) * 0.3 + 0.7;
-            ctx.globalAlpha = s.a * twinkle;
-            ctx.fillStyle = "#ffffff";
-            ctx.beginPath();
-            ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
-            ctx.fill();
-          });
-          ctx.globalAlpha = 1;
-        }
-
-        const trees = [
-          { x: 100, fireTimer: 0 },
-          { x: 250, fireTimer: 0 },
-          { x: width - 150, fireTimer: 0 },
-        ];
-        function updateTreePositions() {
-          trees[2].x = width - 150;
-        }
-
-        function drawGround(sky) {
-          const darkGround = sky === "night" || sky === "sunset";
-          ctx.fillStyle = darkGround ? "#2d3e1f" : "#6b8e23";
-          ctx.fillRect(0, groundLevel, width, height - groundLevel);
-          ctx.fillStyle = darkGround ? "#1e3a5f" : "#4682b4";
+      function drawStars() {
+        const t = Date.now();
+        stars.forEach(s => {
+          const twinkle = Math.sin(t * s.sp + s.off) * 0.3 + 0.7;
+          ctx.globalAlpha = s.a * twinkle;
+          ctx.fillStyle = '#ffffff';
           ctx.beginPath();
-          ctx.ellipse(width * 0.7, groundLevel + 30, 60, 20, 0, 0, Math.PI * 2);
+          ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
           ctx.fill();
-          trees.forEach((tree) => {
-            const x = tree.x,
-              baseY = groundLevel;
-            ctx.fillStyle = "#5c4033";
-            ctx.fillRect(x - 4, baseY - 30, 8, 30);
-            ctx.fillStyle = darkGround ? "#2d5a27" : "#2e8b57";
-            ctx.beginPath();
-            ctx.moveTo(x, baseY - 60);
-            ctx.lineTo(x - 20, baseY - 30);
-            ctx.lineTo(x + 20, baseY - 30);
-            ctx.fill();
-            ctx.beginPath();
-            ctx.moveTo(x, baseY - 45);
-            ctx.lineTo(x - 15, baseY - 20);
-            ctx.lineTo(x + 15, baseY - 20);
-            ctx.fill();
-            if (tree.fireTimer > 0) {
-              ctx.save();
-              ctx.globalAlpha = Math.min(tree.fireTimer / 10, 1);
-              ctx.fillStyle = "#ff4500";
-              ctx.shadowColor = "#ff6347";
-              ctx.shadowBlur = 10;
-              for (let i = 0; i < 5; i++) {
-                const fx = x - 10 + Math.random() * 20,
-                  fy = baseY - 30 - Math.random() * 20;
-                ctx.beginPath();
-                ctx.arc(fx, fy, 4 + Math.random() * 5, 0, Math.PI * 2);
-                ctx.fill();
-              }
-              ctx.restore();
-            }
-          });
-        }
-
-        let rainDrops = [],
-          clouds = [],
-          windLines = [],
-          fogParticles = [];
-        function resetWeatherParticles() {
-          rainDrops = [];
-          clouds = [];
-          windLines = [];
-          fogParticles = [];
-          for (let i = 0; i < 5; i++)
-            clouds.push({
-              x: Math.random() * width,
-              y: 50 + Math.random() * 200,
-              w: 100 + Math.random() * 150,
-              h: 40 + Math.random() * 50,
-              opacity: 0.3 + Math.random() * 0.3,
-              speed: 0.2 + Math.random() * 0.5,
-            });
-        }
-        resetWeatherParticles();
-
-        function updateWeather(weather) {
-          if (weather === "rain") {
-            if (rainDrops.length < 200)
-              for (let i = 0; i < 5; i++)
-                rainDrops.push({
-                  x: Math.random() * width,
-                  y: Math.random() * height,
-                  speed: 8 + Math.random() * 10,
-                  length: 10 + Math.random() * 20,
-                });
-            rainDrops.forEach((d) => {
-              d.y += d.speed;
-              if (d.y > height) {
-                d.y = -10;
-                d.x = Math.random() * width;
-              }
-            });
-          } else rainDrops = [];
-          if (weather === "cloudy") {
-            clouds.forEach((c) => {
-              c.x += c.speed;
-              if (c.x > width + 200) c.x = -200;
-            });
-          }
-          if (weather === "windy") {
-            if (windLines.length < 50)
-              windLines.push({
-                x: Math.random() * width,
-                y: Math.random() * height * 0.5,
-                length: 30 + Math.random() * 70,
-                speed: 3 + Math.random() * 6,
-                opacity: 0.3 + Math.random() * 0.4,
-              });
-            windLines.forEach((l) => {
-              l.x += l.speed;
-              if (l.x > width + 100) {
-                l.x = -100;
-                l.y = Math.random() * height * 0.5;
-              }
-            });
-          } else windLines = [];
-          if (weather === "foggy") {
-            if (fogParticles.length < 80)
-              fogParticles.push({
-                x: Math.random() * width,
-                y: Math.random() * height * 0.7,
-                radius: 30 + Math.random() * 60,
-                opacity: 0.05 + Math.random() * 0.1,
-                speed: 0.1 + Math.random() * 0.3,
-              });
-            fogParticles.forEach((p) => {
-              p.x += p.speed;
-              if (p.x > width + 100) p.x = -100;
-            });
-          } else fogParticles = [];
-        }
-
-        function drawWeather(weather) {
-          if (weather === "rain") {
-            ctx.strokeStyle = "#aaccff";
-            ctx.lineWidth = 1.5;
-            rainDrops.forEach((d) => {
-              ctx.globalAlpha = 0.6;
-              ctx.beginPath();
-              ctx.moveTo(d.x, d.y);
-              ctx.lineTo(d.x - 1, d.y + d.length);
-              ctx.stroke();
-            });
-            ctx.globalAlpha = 1;
-          }
-          if (weather === "cloudy") {
-            clouds.forEach((c) => {
-              ctx.globalAlpha = c.opacity;
-              ctx.fillStyle = "#ffffff";
-              ctx.beginPath();
-              ctx.ellipse(c.x, c.y, c.w / 2, c.h / 2, 0, 0, Math.PI * 2);
-              ctx.fill();
-            });
-            ctx.globalAlpha = 1;
-          }
-          if (weather === "windy") {
-            ctx.strokeStyle = "#ffffff";
-            ctx.lineWidth = 2;
-            windLines.forEach((l) => {
-              ctx.globalAlpha = l.opacity;
-              ctx.beginPath();
-              ctx.moveTo(l.x, l.y);
-              ctx.lineTo(l.x + l.length, l.y - 5);
-              ctx.stroke();
-            });
-            ctx.globalAlpha = 1;
-          }
-          if (weather === "foggy") {
-            fogParticles.forEach((p) => {
-              ctx.globalAlpha = p.opacity;
-              ctx.fillStyle = "#e0e0e0";
-              ctx.beginPath();
-              ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
-              ctx.fill();
-            });
-            ctx.globalAlpha = 1;
-          }
-        }
-
-        const shooters = [];
-        for (let i = 0; i < 4; i++)
-          shooters.push({
-            x: Math.random() * width,
-            y: -20,
-            vx: (Math.random() - 0.5) * 2,
-            vy: 2 + Math.random() * 3,
-            life: 0,
-            decay: 0.005,
-            len: 60 + Math.random() * 50,
-          });
-        function updateShooters() {
-          shooters.forEach((s) => {
-            if (s.life <= 0) {
-              s.x = Math.random() * width;
-              s.y = -20;
-              s.vx = (Math.random() - 0.5) * 2;
-              s.vy = 2 + Math.random() * 3;
-              s.life = 1;
-              s.decay = 0.004 + Math.random() * 0.003;
-            }
-            s.x += s.vx;
-            s.y += s.vy;
-            s.life -= s.decay;
-            if (s.y > height || s.x < -50 || s.x > width + 50) s.life = 0;
-          });
-        }
-        function drawShooters() {
-          shooters.forEach((s) => {
-            if (s.life <= 0) return;
-            ctx.globalAlpha = s.life * 0.8;
-            ctx.strokeStyle = "#ffffff";
-            ctx.lineWidth = 2;
-            ctx.beginPath();
-            ctx.moveTo(s.x, s.y);
-            ctx.lineTo(s.x - s.vx * s.len * 0.3, s.y - s.vy * s.len * 0.3);
-            ctx.stroke();
-          });
-          ctx.globalAlpha = 1;
-        }
-
-        const meteors = [];
-        function spawnMeteor() {
-          return {
-            x: Math.random() * width,
-            y: -50,
-            vx: (Math.random() - 0.5) * 5,
-            vy: 4 + Math.random() * 6,
-            life: 1,
-            decay: 0.008,
-            particles: [],
-            exploded: false,
-          };
-        }
-        for (let i = 0; i < 3; i++) meteors.push(spawnMeteor());
-        function updateMeteors() {
-          if (!meteorsEnabled) return;
-          for (let m of meteors) {
-            if (m.life <= 0) {
-              Object.assign(m, spawnMeteor());
-            }
-            m.x += m.vx;
-            m.y += m.vy;
-            m.life -= m.decay;
-            if (m.y >= groundLevel && !m.exploded) {
-              m.exploded = true;
-              for (let j = 0; j < 20; j++)
-                m.particles.push({
-                  x: m.x,
-                  y: m.y,
-                  vx: (Math.random() - 0.5) * 8,
-                  vy: (Math.random() - 1) * 8,
-                  life: 1,
-                  r: 2 + Math.random() * 4,
-                  color: "#ff9f43",
-                });
-              m.life = 0;
-            }
-            if (!m.exploded && Math.random() < 0.6)
-              m.particles.push({
-                x: m.x,
-                y: m.y,
-                vx: 0,
-                vy: 0,
-                life: 0.5,
-                r: Math.random() * 2 + 1,
-                color: "#ff4500",
-              });
-            m.particles.forEach((p) => {
-              p.x += p.vx;
-              p.y += p.vy;
-              p.life -= 0.02;
-            });
-            m.particles = m.particles.filter((p) => p.life > 0);
-          }
-        }
-        function drawMeteors() {
-          if (!meteorsEnabled) return;
-          meteors.forEach((m) => {
-            if (m.life > 0 && !m.exploded) {
-              ctx.globalAlpha = m.life;
-              ctx.fillStyle = "#ff4500";
-              ctx.beginPath();
-              ctx.arc(m.x, m.y, 4, 0, Math.PI * 2);
-              ctx.fill();
-              ctx.strokeStyle = "#ff6347";
-              ctx.lineWidth = 2;
-              ctx.beginPath();
-              ctx.moveTo(m.x, m.y);
-              ctx.lineTo(m.x - m.vx * 8, m.y - m.vy * 8);
-              ctx.stroke();
-            }
-            m.particles.forEach((p) => {
-              ctx.globalAlpha = p.life;
-              ctx.fillStyle = p.color;
-              ctx.beginPath();
-              ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
-              ctx.fill();
-            });
-          });
-          ctx.globalAlpha = 1;
-        }
-
-        let dragon = {
-          active: false,
-          x: -200,
-          y: height * 0.5,
-          speedX: 1.5,
-          speedY: 0,
-          dir: 1,
-          wing: 0,
-          flames: [],
-          flameCooldown: 0,
-          targetY: height * 0.5,
-          changeDirTimer: 100,
-        };
-        function spawnDragon() {
-          dragon.active = true;
-          dragon.dir = Math.random() < 0.5 ? 1 : -1;
-          dragon.x = dragon.dir === 1 ? -150 : width + 150;
-          dragon.y = Math.random() * (height * 0.6) + height * 0.1;
-          dragon.speedX = 1 + Math.random() * 2;
-          dragon.speedY = (Math.random() - 0.5) * 0.5;
-          dragon.targetY = dragon.y;
-          dragon.flames = [];
-          dragon.flameCooldown = 0;
-          dragon.changeDirTimer = 80 + Math.random() * 120;
-        }
-        function drawDragon(x, y, dir) {
-          ctx.save();
-          ctx.translate(x, y);
-          ctx.scale(dir, 1);
-          ctx.fillStyle = "#b22222";
-          ctx.shadowColor = "#ff4500";
-          ctx.shadowBlur = 12;
-          ctx.beginPath();
-          ctx.ellipse(0, 0, 32, 14, 0, 0, Math.PI * 2);
-          ctx.fill();
-          ctx.beginPath();
-          ctx.moveTo(-30, 0);
-          ctx.quadraticCurveTo(-50, -10 + Math.sin(dragon.wing) * 5, -60, 5);
-          ctx.strokeStyle = "#b22222";
-          ctx.lineWidth = 5;
-          ctx.stroke();
-          ctx.beginPath();
-          ctx.moveTo(18, -2);
-          ctx.lineTo(28, -8);
-          ctx.lineTo(22, -14);
-          ctx.fillStyle = "#b22222";
-          ctx.fill();
-          ctx.beginPath();
-          ctx.arc(32, -10, 9, 0, Math.PI * 2);
-          ctx.fill();
-          ctx.fillStyle = "#333";
-          ctx.beginPath();
-          ctx.moveTo(34, -18);
-          ctx.lineTo(38, -28);
-          ctx.lineTo(30, -20);
-          ctx.fill();
-          ctx.fillStyle = "#fff";
-          ctx.beginPath();
-          ctx.arc(34, -12, 2.5, 0, Math.PI * 2);
-          ctx.fill();
-          ctx.fillStyle = "#000";
-          ctx.beginPath();
-          ctx.arc(34.5, -12, 1.2, 0, Math.PI * 2);
-          ctx.fill();
-          ctx.fillStyle = "#8b0000";
-          ctx.beginPath();
-          ctx.moveTo(38, -10);
-          ctx.lineTo(44, -12);
-          ctx.lineTo(38, -6);
-          ctx.fill();
-          ctx.fillStyle = "#ff4500";
-          ctx.beginPath();
-          ctx.arc(43, -8, 2, 0, Math.PI * 2);
-          ctx.fill();
-          ctx.fillStyle = "#b22222";
-          ctx.shadowBlur = 8;
-          ctx.beginPath();
-          ctx.moveTo(-10, -12);
-          ctx.quadraticCurveTo(-5, -35 + Math.sin(dragon.wing) * 10, 5, -12);
-          ctx.fill();
-          ctx.beginPath();
-          ctx.moveTo(-10, 12);
-          ctx.quadraticCurveTo(-5, 35 - Math.sin(dragon.wing) * 10, 5, 12);
-          ctx.fill();
-          for (let i = -3; i <= 3; i++) {
-            ctx.fillStyle = "#ff6347";
-            ctx.beginPath();
-            ctx.moveTo(i * 6, -14);
-            ctx.lineTo(i * 6, -20);
-            ctx.lineTo(i * 6 + 4, -14);
-            ctx.fill();
-          }
-          ctx.restore();
-        }
-        function updateDragon() {
-          if (!dragon.active) {
-            if (Math.random() < 0.003) spawnDragon();
-            return;
-          }
-          dragon.x += dragon.speedX * dragon.dir;
-          if (Math.abs(dragon.y - dragon.targetY) < 5) {
-            dragon.targetY = Math.random() * (height * 0.6) + height * 0.1;
-            dragon.speedY = (Math.random() - 0.5) * 1.2;
-          }
-          dragon.y += dragon.speedY;
-          if (dragon.y > groundLevel - 40) {
-            dragon.y = groundLevel - 40;
-            dragon.speedY *= -0.5;
-          }
-          if (dragon.y < 40) {
-            dragon.y = 40;
-            dragon.speedY *= -0.5;
-          }
-          dragon.changeDirTimer--;
-          if (dragon.changeDirTimer <= 0) {
-            dragon.dir = Math.random() < 0.4 ? -dragon.dir : dragon.dir;
-            dragon.changeDirTimer = 80 + Math.random() * 150;
-            dragon.speedX = 1 + Math.random() * 2.5;
-          }
-          dragon.wing += 0.2;
-          if (dragon.flameCooldown <= 0) {
-            let mx = dragon.x + 35 * dragon.dir,
-              my = dragon.y - 10;
-            for (let i = 0; i < 3; i++)
-              dragon.flames.push({
-                x: mx + Math.random() * 5,
-                y: my + (Math.random() - 0.5) * 8,
-                vx: dragon.dir * (2 + Math.random() * 3),
-                vy: (Math.random() - 0.5) * 2,
-                life: 0.8,
-                r: 2 + Math.random() * 3,
-                color: "#ff4500",
-              });
-            dragon.flameCooldown = 5 + Math.floor(Math.random() * 5);
-            trees.forEach((tree) => {
-              if (tree.fireTimer > 0) return;
-              const dx = dragon.x - tree.x,
-                dy = dragon.y - (groundLevel - 20);
-              if (Math.sqrt(dx * dx + dy * dy) < 60 && Math.random() < 0.3)
-                tree.fireTimer = 10;
-            });
-          } else dragon.flameCooldown--;
-          dragon.flames.forEach((f) => {
-            f.x += f.vx;
-            f.y += f.vy;
-            f.life -= 0.015;
-          });
-          dragon.flames = dragon.flames.filter((f) => f.life > 0);
-          if (
-            (dragon.dir === 1 && dragon.x > width + 200) ||
-            (dragon.dir === -1 && dragon.x < -200)
-          )
-            dragon.active = false;
-        }
-        function drawDragonFlames() {
-          dragon.flames.forEach((f) => {
-            ctx.globalAlpha = f.life;
-            ctx.fillStyle = f.color;
-            ctx.beginPath();
-            ctx.arc(f.x, f.y, f.r, 0, Math.PI * 2);
-            ctx.fill();
-          });
-          ctx.globalAlpha = 1;
-        }
-        function updateTreeFires(delta) {
-          trees.forEach((t) => {
-            if (t.fireTimer > 0) t.fireTimer -= delta;
-            if (t.fireTimer < 0) t.fireTimer = 0;
-          });
-        }
-
-        // Animation
-        let lastTime = performance.now();
-        function animate(now) {
-          const delta = Math.min(0.1, (now - lastTime) / 1000);
-          lastTime = now;
-          ctx.clearRect(0, 0, width, height);
-          const sky = getEffectiveSky();
-          const weather = getEffectiveWeather();
-          drawSkyGradient(sky);
-          drawStars(sky);
-          drawSunMoon(sky);
-          drawGround(sky);
-          updateWeather(weather);
-          drawWeather(weather);
-          updateShooters();
-          drawShooters();
-          updateMeteors();
-          drawMeteors();
-          updateDragon();
-          if (dragon.active) drawDragon(dragon.x, dragon.y, dragon.dir);
-          drawDragonFlames();
-          updateTreeFires(delta);
-          requestAnimationFrame(animate);
-        }
-        requestAnimationFrame(animate);
-
-        window.addEventListener("resize", updateTreePositions);
-        updateTreePositions();
-
-        // Theme application from sky (overwrites any previous manual dark/light)
-        function updateThemeFromSky() {
-          applyThemeFromSky(getEffectiveSky());
-        }
-        // Call initially and whenever manualSky changes
-        updateThemeFromSky();
-
-        // --- MODE MODAL LOGIC ---
-        const modeBtn = document.getElementById("modeBtn");
-        const modal = document.getElementById("modeModal");
-        const closeModalBtn = document.getElementById("closeModalBtn");
-
-        modeBtn.addEventListener("click", () => modal.classList.add("active"));
-        closeModalBtn.addEventListener("click", () =>
-          modal.classList.remove("active"),
-        );
-        modal.addEventListener("click", (e) => {
-          if (e.target === modal) modal.classList.remove("active");
         });
+        ctx.globalAlpha = 1;
+      }
 
-        // Radio buttons
-        const skyRadios = document.querySelectorAll('input[name="skyMode"]');
-        const weatherRadios = document.querySelectorAll(
-          'input[name="weatherMode"]',
-        );
-        const meteorCheck = document.getElementById("meteorToggle");
+      // moon (night)
+      function drawMoon() {
+        const minDim = Math.min(width, height);
+        let radius = Math.min(minDim * 0.18, 150);
+        if (minDim < 600) radius = Math.min(minDim * 0.25, 80);
+        const cx = width - radius, cy = radius;
+        ctx.save();
+        ctx.shadowColor = '#ffffcc';
+        ctx.shadowBlur = 20;
+        ctx.fillStyle = '#f5f5dc';
+        ctx.beginPath();
+        ctx.arc(cx, cy, radius, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.shadowBlur = 0;
+        ctx.fillStyle = '#d4d4aa';
+        ctx.beginPath();
+        ctx.arc(cx - radius * 0.2, cy - radius * 0.2, radius * 0.15, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.beginPath();
+        ctx.arc(cx + radius * 0.25, cy + radius * 0.15, radius * 0.1, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.beginPath();
+        ctx.arc(cx - radius * 0.1, cy + radius * 0.3, radius * 0.12, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.restore();
+      }
 
-        skyRadios.forEach((r) => {
-          r.addEventListener("change", () => {
-            manualSky = r.value === "auto" ? null : r.value;
-            updateThemeFromSky();
-          });
-        });
-        weatherRadios.forEach((r) => {
-          r.addEventListener("change", () => {
-            manualWeather = r.value === "auto" ? null : r.value;
-            resetWeatherParticles();
-          });
-        });
-        meteorCheck.addEventListener("change", () => {
-          meteorsEnabled = meteorCheck.checked;
-        });
-
-        // Hamburger & nav
-        document.getElementById("hamburger").addEventListener("click", () => {
-          document.getElementById("navLinks").classList.toggle("show");
-        });
-        document.querySelectorAll(".nav-links a").forEach((a) => {
-          a.addEventListener("click", () =>
-            document.getElementById("navLinks").classList.remove("show"),
-          );
-        });
-        const sections = document.querySelectorAll("section");
-        const navItems = document.querySelectorAll(".nav-links a");
-        window.addEventListener("scroll", () => {
-          let current = "home";
-          sections.forEach((s) => {
-            if (pageYOffset >= s.offsetTop - 120) current = s.id;
-          });
-          navItems.forEach((a) => {
-            a.classList.remove("active");
-            if (a.getAttribute("href") === "#" + current)
-              a.classList.add("active");
-          });
-        });
-
-        // Jokes
-        const jokes = [
-          "Why do programmers mix up Christmas and Halloween? Oct 31 == Dec 25! 🎃",
-          "UDP joke? You might not get it. 📡",
-          "SQL bar: 'Can I join you?' 🍻",
-          "Broke dev? Used up all cache! 💸",
-          "Java devs wear glasses – they don't C#. 👓",
-          "Light bulb? Hardware problem! 💡",
-          "Debugging: detective & murderer. 🔍",
-          "10 types of people: binary understanders. 🤓",
-        ];
-        const jt = document.getElementById("jokeText");
-        document
-          .getElementById("newJokeBtn")
-          .addEventListener(
-            "click",
-            () =>
-              (jt.textContent =
-                "😂 " + jokes[Math.floor(Math.random() * jokes.length)]),
-          );
-        jt.textContent =
-          "😂 " + jokes[Math.floor(Math.random() * jokes.length)];
-      })();
-    </script>
-  </body>
-</html>
+      // ground (night)
+      function drawGround() {
+        ctx.fillStyle = '#2d3e1f';
+        ctx.fillRect(0, groundLevel, width, height - groundLevel);
+        ctx.fillStyle = '#1e3a5f';
+        ctx.beginPath();
+        ctx.ellipse(width * 0.7, groundLevel + 30, 60, 20, 0, 0, Math.PI * 2);
+        ctx.fill();
+        // simple trees (no fire)
+        const treePositions = [100, 250, width - 150];
+        treePositions.forEach(x => {
+          const baseY = groundLevel;
+          ctx.fillStyle = '#
